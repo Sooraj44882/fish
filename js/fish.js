@@ -19,10 +19,10 @@ function updateFishPhysics(dt){
     let ax=0,ay=0;
 
 //calculate accelration
-if(keys.has('ArrowUp') ||keys.has('keyW')) ay-=accel;
-if(keys.has('ArrowDown') || keys.has('keyS')) ay+=accel;
-if(keys.has('ArrowLeft') || keys.has('keyA')) ax-=accel;
-if(keys.has('ArrowRight') || keys.has('keyD')) ax+=accel;
+if(keys.has('ArrowUp') ||keys.has('KeyW')) ay-=accel;
+if(keys.has('ArrowDown') || keys.has('KeyS')) ay+=accel;
+if(keys.has('ArrowLeft') || keys.has('KeyA')) ax-=accel;
+if(keys.has('ArrowRight') || keys.has('KeyD')) ax+=accel;
 
 // change velocity according to accelration
 fish.vx +=ax*dt;

@@ -6,9 +6,8 @@ function update(dt) {
 }
 
 function draw() {
-  // Paint the canvas a ocean blue
-  ctx.fillStyle = '#0e699e';
-  ctx.fillRect(0, 0, W, H);
+  // Paint the canvas a ocean blue using background js
+  if(typeof drawBackground==='function') drawBackground();
 
   drawPlayerFish();  // draw fish
 }
