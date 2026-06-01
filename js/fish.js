@@ -30,13 +30,17 @@ fish.vy +=ay*dt;
     fish.vx *=frict;
     fish.vy *=frict;
 
-// 4. Enforce the speed limit
+// enforce the speed limit
   fish.vx = clamp(fish.vx, -maxSpd, maxSpd); 
   fish.vy = clamp(fish.vy, -maxSpd, maxSpd);
 
   // fish coordinates
   fish.x +=fish.vx*dt;
   fish.y +=fish.vy*dt;
+
+  // screen boundary
+  fish.x=clamp(fish.x,fish.r,W-fish.r);
+  fish.y=clamp(fish.y,fish.r,H-fish.r)
 }
 
 function drawPlayerFish(){
