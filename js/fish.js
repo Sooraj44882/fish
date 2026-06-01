@@ -5,7 +5,9 @@ const fish={
     y:H*0.5,
     vx:0,
     vy:0,
-    r:18
+    r:18,
+    dashCd:0,  // cooldown after dash
+    dashT:0     // dash time
 };
 
 function updateFishPhysics(dt){
@@ -25,14 +27,31 @@ if(keys.has('ArrowRight') || keys.has('keyD')) ax+=accel;
 fish.vx +=ax*dt;
 fish.vy +=ay*dt;
 
-//apply water friction 
-    const frict=Math.pow(drag,dt*60);
+//dash 
+const dashing=keys.has('ShiftLeft')|| keys.has('Space');
+
+//dash time and cooldown
+if(dashing && fish.dashCd<=0){
+    fish.dashT=0.2;
+    fish.dashCd=0.6;
+
+    fish.vx+=fish.vx===0 && fish.vy===0? 800: Math.sign(fish.vx)*800;
+    fish.vy+=Math.sign(fish.vy)*800;
+}
+
+//timer
+fish.dashCd=Math.max(0,fish.dashCd -dt);
+fish.dashT=Math.max(0,fish.dashT-dt);
+
+// friction 
+    const frict=fish.dashT>0 ? 0.98: Math.pow(drag,dt*60);
     fish.vx *=frict;
     fish.vy *=frict;
 
 // enforce the speed limit
-  fish.vx = clamp(fish.vx, -maxSpd, maxSpd); 
-  fish.vy = clamp(fish.vy, -maxSpd, maxSpd);
+  const currentMaxSpd=fish.dashT>0?1000:maxSpd;
+  fish.vx = clamp(fish.vx, -currentMaxSpd, currentMaxSpd); 
+  fish.vy = clamp(fish.vy, -currentMaxSpd, currentMaxSpd);
 
   // fish coordinates
   fish.x +=fish.vx*dt;
@@ -40,7 +59,7 @@ fish.vy +=ay*dt;
 
   // screen boundary
   fish.x=clamp(fish.x,fish.r,W-fish.r);
-  fish.y=clamp(fish.y,fish.r,H-fish.r)
+  fish.y=clamp(fish.y,fish.r,H-fish.r);
 }
 
 function drawPlayerFish(){
