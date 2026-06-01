@@ -7,7 +7,8 @@ const fish={
     vy:0,
     r:18,
     dashCd:0,  // cooldown after dash
-    dashT:0     // dash time
+    dashT:0,    // dash time
+    shrink:0      //shrink ability
 };
 
 function updateFishPhysics(dt){
@@ -17,7 +18,7 @@ function updateFishPhysics(dt){
 
     let ax=0,ay=0;
 
-//calculate acce;ration
+//calculate accelration
 if(keys.has('ArrowUp') ||keys.has('keyW')) ay-=accel;
 if(keys.has('ArrowDown') || keys.has('keyS')) ay+=accel;
 if(keys.has('ArrowLeft') || keys.has('keyA')) ax-=accel;
@@ -57,6 +58,11 @@ fish.dashT=Math.max(0,fish.dashT-dt);
   fish.x +=fish.vx*dt;
   fish.y +=fish.vy*dt;
 
+  //shrink 
+  const isShrinking=keys.has('ControlLeft') || keys.has('KeyX');
+
+  fish.shrink+=((isShrinking? 1 : 0)- fish.shrink)*Math.min(1,dt*15);
+
   // screen boundary
   fish.x=clamp(fish.x,fish.r,W-fish.r);
   fish.y=clamp(fish.y,fish.r,H-fish.r);
@@ -66,6 +72,9 @@ function drawPlayerFish(){
     ctx.save();
     ctx.translate(fish.x,fish.y);
 
+    // shrink the size down to 65%
+    const sc=fish.shrink>0.5?0.65:1;
+    ctx.scale(sc,sc);
     // draw an orange elliplse shape for prototype
     ctx.fillStyle = '#ff9e22'; 
     ctx.beginPath(); 
