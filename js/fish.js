@@ -9,14 +9,34 @@ const fish={
 };
 
 function updateFishPhysics(dt){
-    const speed=400; // flat speed
+    const accel=850;    
+    const maxSpd=380; // speed limit
+    const drag=0.88;    //water friction
 
-//controls
-if(keys.has('ArrowUp') ||keys.has('keyW')) fish.y-=speed*dt;
-if(keys.has('ArrowDown') || keys.has('keyS')) fish.y+=speed*dt;
-if(keys.has('ArrowLeft') || keys.has('keyA')) fish.x-=speed*dt;
-if(keys.has('ArrowRight') || keys.has('keyD')) fish.x+=speed*dt;
+    let ax=0,ay=0;
 
+//calculate acce;ration
+if(keys.has('ArrowUp') ||keys.has('keyW')) ay-=accel;
+if(keys.has('ArrowDown') || keys.has('keyS')) ay+=accel;
+if(keys.has('ArrowLeft') || keys.has('keyA')) ax-=accel;
+if(keys.has('ArrowRight') || keys.has('keyD')) ax+=accel;
+
+// change velocity according to accelration
+fish.vx +=ax*dt;
+fish.vy +=ay*dt;
+
+//apply water friction 
+    const frict=Math.pow(drag,dt*60);
+    fish.vx *=frict;
+    fish.vy *=frict;
+
+// 4. Enforce the speed limit
+  fish.vx = clamp(fish.vx, -maxSpd, maxSpd); 
+  fish.vy = clamp(fish.vy, -maxSpd, maxSpd);
+
+  // fish coordinates
+  fish.x +=fish.vx*dt;
+  fish.y +=fish.vy*dt;
 }
 
 function drawPlayerFish(){
