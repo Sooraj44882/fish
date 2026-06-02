@@ -5,11 +5,20 @@ function update(dt) {
     updateFishPhysics(dt);   // fish postion update
 
    if (typeof updateBackgroundLogic === 'function') updateBackgroundLogic(dt); // move background
+
+   //  Update the cave walls
+  if (typeof updateObstacles === 'function') updateObstacles(dt);
+
 }
 
 function draw() {
   // Paint the canvas a ocean blue using background js
   if(typeof drawBackground==='function') drawBackground();
+
+
+  // Draw the cave walls BEFORE we draw the fish, so the fish is on top
+  if (typeof drawObstacles === 'function') drawObstacles();
+
 
   drawPlayerFish();  // draw fish
 }

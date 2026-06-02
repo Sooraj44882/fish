@@ -11,8 +11,15 @@ const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 const rand = (min, max) => Math.random() * (max - min) + min;
 
 // background fish and turtles
-const world={speed:280};
-const entities={bgFish:[], turtles:[]};
+const world={speed:280, scroll:0};
+
+// Added state to track the phases. We are forcing it to cave right now to test
+let state = {
+  segmentCount: 0, 
+  phase: 'cave' 
+};
+
+const entities={bgFish:[], turtles:[],segments:[]};
 
 function updateArray(arr,fn){
     for(let i=arr.length-1;i>=0;i--){
