@@ -3,6 +3,8 @@ let lastTime = performance.now();
 
 function update(dt) {
     updateFishPhysics(dt);   // fish postion update
+
+   if (typeof updateBackgroundLogic === 'function') updateBackgroundLogic(dt); // move background
 }
 
 function draw() {
@@ -21,6 +23,9 @@ function loop(now) {
   draw();
   rafId = requestAnimationFrame(loop);
 }
+
+// Spawn the scenery before starting the loop
+if (typeof initBackground === 'function') initBackground();
 
 // Start the engine
 loop(performance.now());
