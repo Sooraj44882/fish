@@ -49,3 +49,21 @@ function drawObstacles() {
   
   ctx.restore();
 }
+// collision detection 
+function checkWallCollisions() {
+  for (let seg of entities.segments) {
+    // get the wall actual position on the screen
+    const x = seg.x - world.scroll;
+    // check if the fish is inside this specific wall segment
+    if (fish.x + fish.r > x && fish.x - fish.r < x + seg.w) {
+      // calculate where the rock walls are
+      const topWall = seg.cY - seg.gap / 2;
+      const bottomWall = seg.cY + seg.gap / 2;
+      // did the fish hit the top rock or the bottom rock
+      if (fish.y - fish.r < topWall || fish.y + fish.r > bottomWall) {
+        return true; 
+      }
+    }
+  }
+  return false; 
+}

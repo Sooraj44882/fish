@@ -8,7 +8,15 @@ function update(dt) {
 
    //  Update the cave walls
   if (typeof updateObstacles === 'function') updateObstacles(dt);
-
+  if (typeof checkWallCollisions === 'function' && checkWallCollisions()) {
+    world.scroll = 0; 
+    fish.x = W * 0.25; 
+    fish.y = H * 0.5; 
+    fish.vx = 0; 
+    fish.vy = 0;
+    entities.segments = []; 
+    state.segmentCount = 0;
+  }
 }
 
 function draw() {
