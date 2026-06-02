@@ -5,16 +5,20 @@ function update(dt) {
     updateFishPhysics(dt);   // fish postion update
 
    if (typeof updateBackgroundLogic === 'function') updateBackgroundLogic(dt); // move background
+   if (typeof updateObstacles === 'function') updateObstacles(dt);
+  
+   //  crash logic for both  cave Walls and Jellyfish 
+  const hitWall = typeof checkWallCollisions === 'function' && checkWallCollisions();
+  const hitJelly = typeof checkJellyCollisions === 'function' && checkJellyCollisions();
 
-   //  Update the cave walls
-  if (typeof updateObstacles === 'function') updateObstacles(dt);
-  if (typeof checkWallCollisions === 'function' && checkWallCollisions()) {
+  if (hitWall || hitJelly) {
     world.scroll = 0; 
     fish.x = W * 0.25; 
     fish.y = H * 0.5; 
     fish.vx = 0; 
     fish.vy = 0;
     entities.segments = []; 
+    entities.jellyfish = []; 
     state.segmentCount = 0;
   }
 }
@@ -26,6 +30,9 @@ function draw() {
 
   // Draw the cave walls BEFORE we draw the fish, so the fish is on top
   if (typeof drawObstacles === 'function') drawObstacles();
+
+  // draw jellyfish before the player fish
+  if (typeof drawJellyfish === 'function') drawJellyfish();
 
 
   drawPlayerFish();  // draw fish

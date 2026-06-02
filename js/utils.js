@@ -19,7 +19,7 @@ let state = {
   phase: 'cave' 
 };
 
-const entities={bgFish:[], turtles:[],segments:[]};
+const entities={bgFish:[], turtles:[],segments:[],jellyfish:[]};
 
 function updateArray(arr,fn){
     for(let i=arr.length-1;i>=0;i--){
