@@ -159,3 +159,20 @@ function drawPearls(){
     ctx.restore();
   });
 }
+
+// collect pearls
+
+function checkPearlCollisions(){
+  updateArray(entities.pearls,(p)=>{
+    const x=p.x-world.scroll;
+
+    const dist=Math.hypot(fish.x-x,fish.y-p.y);  // distance between fish and pearl
+
+    // increasse the score and delete the pearls
+    if(dist<fish.r+p.r){
+      state.score+=1;
+      return false;
+    }
+    return true;
+  });
+}

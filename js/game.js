@@ -6,6 +6,9 @@ function update(dt) {
 
    if (typeof updateBackgroundLogic === 'function') updateBackgroundLogic(dt); // move background
    if (typeof updateObstacles === 'function') updateObstacles(dt);
+
+   // check if fish touch the pearls
+   if(typeof checkPearlCollisions==='function') checkPearlCollisions();
   
    //  crash logic for both  cave Walls and Jellyfish 
   const hitWall = typeof checkWallCollisions === 'function' && checkWallCollisions();
@@ -21,6 +24,8 @@ function update(dt) {
     entities.jellyfish = [];    //the entities clear when crash
     entities.pearls=[];
     state.segmentCount = 0;
+
+    state.score=0; //reset score
   }
 }
 
@@ -39,6 +44,20 @@ function draw() {
   if (typeof drawJellyfish === 'function') drawJellyfish();
 
   drawPlayerFish();  // draw fish
+
+  // draw the Pearl Score 
+  ctx.save();
+  ctx.fillStyle = 'white';
+  ctx.font = 'bold 24px Arial';
+  ctx.shadowBlur = 4;
+  ctx.shadowColor = 'black'; 
+  
+  // Draw Pearls on the Top Right
+  ctx.textAlign = 'right';
+  ctx.fillText(`Pearls: ${state.score}`, W - 20, 40);
+  
+  ctx.restore();
+
 }
 
 function loop(now) {

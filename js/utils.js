@@ -16,7 +16,8 @@ const world={speed:280, scroll:0};
 // Added state to track the phases. We are forcing it to cave right now to test
 let state = {
   segmentCount: 0, 
-  phase: 'cave' 
+  phase: 'cave' ,
+  score:0
 };
 
 const entities={bgFish:[], turtles:[],segments:[],jellyfish:[],pearls:[]};
