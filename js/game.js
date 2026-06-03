@@ -18,7 +18,8 @@ function update(dt) {
     fish.vx = 0; 
     fish.vy = 0;
     entities.segments = []; 
-    entities.jellyfish = []; 
+    entities.jellyfish = [];    //the entities clear when crash
+    entities.pearls=[];
     state.segmentCount = 0;
   }
 }
@@ -31,9 +32,11 @@ function draw() {
   // Draw the cave walls BEFORE we draw the fish, so the fish is on top
   if (typeof drawObstacles === 'function') drawObstacles();
 
+  // draw the pearls
+  if(typeof drawPearls==='function') drawPearls();
+
   // draw jellyfish before the player fish
   if (typeof drawJellyfish === 'function') drawJellyfish();
-
 
   drawPlayerFish();  // draw fish
 }

@@ -18,6 +18,16 @@ function spawnSegment(x) {
       phase: rand(0, Math.PI * 2) 
     });
   }
+
+  // spawn pearls
+  if(Math.random()<0.20 && index>3){
+    entities.pearls.push({
+      x:x+ segmentWidth/2,
+      y:cY+rand(-30,30),
+      r:20,
+      phase:rand(0,Math.PI*2)
+    });
+  }
 }
 
 function updateObstacles(dt) {
@@ -128,4 +138,24 @@ function checkJellyCollisions() {
     }
   }
   return false;
+}
+// pearl 
+function drawPearls(){
+  entities.pearls.forEach(p=>{
+    const x=p.x- world.scroll;
+    if(x<-50 || x>W+50)return;
+    ctx.save();
+    ctx.translate(x,p.y);
+
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = '#ffffff';
+    ctx.fillStyle = '#e6ffff';
+
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(-5, -5, p.r * 0.3, 0, Math.PI * 2);
+    ctx.fill();
+    
+    ctx.restore();
+  });
 }
