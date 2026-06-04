@@ -1,11 +1,16 @@
 let rafId = 0;
 let lastTime = performance.now();
 
+const distEl=document.getElementById('dist-val');
+const scoreEl=document.getElementById('score-val');
+
 function update(dt) {
     updateFishPhysics(dt);   // fish postion update
 
    if (typeof updateBackgroundLogic === 'function') updateBackgroundLogic(dt); // move background
    if (typeof updateObstacles === 'function') updateObstacles(dt);
+
+  state.distance+=world.speed*dt*0.01;
 
    // check if fish touch the pearls
    if(typeof checkPearlCollisions==='function') checkPearlCollisions();
@@ -25,7 +30,8 @@ function update(dt) {
     entities.pearls=[];
     state.segmentCount = 0;
 
-    state.score=0; //reset score
+    state.score=0; //reset score and distance
+    state.distance=0;
   }
 }
 
@@ -45,18 +51,9 @@ function draw() {
 
   drawPlayerFish();  // draw fish
 
-  // draw the Pearl Score 
-  ctx.save();
-  ctx.fillStyle = 'white';
-  ctx.font = 'bold 24px Arial';
-  ctx.shadowBlur = 4;
-  ctx.shadowColor = 'black'; 
-  
-  // Draw Pearls on the Top Right
-  ctx.textAlign = 'right';
-  ctx.fillText(`Pearls: ${state.score}`, W - 20, 40);
-  
-  ctx.restore();
+ // score of pearl and distance
+ distEl.innerText=Math.floor(state.distance);
+ scoreEl.innerText=state.score;
 
 }
 
