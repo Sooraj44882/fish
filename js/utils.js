@@ -13,10 +13,10 @@ const rand = (min, max) => Math.random() * (max - min) + min;
 // background fish and turtles
 const world={speed:280, scroll:0};
 
-// Added state to track the phases. We are forcing it to cave right now to test
+// Added state to track the phases. 
 let state = {
   segmentCount: 0, 
-  phase: 'cave' ,
+  phase: 'start' ,
   score:0
 };
 

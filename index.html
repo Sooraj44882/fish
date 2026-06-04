@@ -10,10 +10,29 @@
   <canvas id="game"></canvas>
 
   <div id="ui-layer">
+   <div id="hud">
     <div id="distance-display">Distance: <span id="dist-val">0</span>m</div>
     <div id="score-display">Pearls: <span id="score-val">0</span></div>
+   </div>
+
+   <div id="start-screen" class="menu-screen">
+    <h1>Deep Dive</h1>
+    <p>Use WASD or Arrows to swim.</p>
+    <p><b>Shift</b> to Dash | </b>ctrl</b> to Shrink</p>
+    <button id="start-btn">START GAME</button>
+   </div>
+
+   <div id="game-over-screen" class="menu-screen" style="display: none;">
+    <h1>GAME OVER</h1>
+    <p>Distance:<span id="final-dist">0</span></p>
+    <p>Pearls: <span id="final-score">0</span></p>
+    <button id="restart-btn">PLAY AGAIN</button>
+   </div>
   </div>
 
+
+  <div id="score-display">Pearls:<span id="score-val">0</span></div>
+  </div>
   <script src="js/utils.js"></script>
   <script src="js/control.js"></script>
   <script src="js/fish.js"></script>
