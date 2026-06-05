@@ -1,16 +1,4 @@
 //fish
-
-const fish={
-    x:W*0.25,
-    y:H*0.5,
-    vx:0,
-    vy:0,
-    r:18,
-    dashCd:0,  // cooldown after dash
-    dashT:0,    // dash time
-    shrink:0      //shrink ability
-};
-
 function updateFishPhysics(dt){
     const accel=850;    
     const maxSpd=380; // speed limit
@@ -64,22 +52,50 @@ fish.dashT=Math.max(0,fish.dashT-dt);
   fish.shrink+=((isShrinking? 1 : 0)- fish.shrink)*Math.min(1,dt*15);
 
   // screen boundary
+  const fr =fish.r*(fish.shrink>0.5? 0.65:1);
   fish.x=clamp(fish.x,fish.r,W-fish.r);
   fish.y=clamp(fish.y,fish.r,H-fish.r);
+
+  //animation tilt and wag
+
+ fish.angle += (clamp(fish.vy * 0.0025 + fish.vx * 0.001, -0.7, 0.7) - fish.angle) * Math.min(1, dt * 10);
+  fish.phase += dt * (3 + Math.hypot(fish.vx, fish.vy) / 50);
 }
 
-function drawPlayerFish(){
-    ctx.save();
-    ctx.translate(fish.x,fish.y);
-
-    // shrink the size down to 65%
-    const sc=fish.shrink>0.5?0.65:1;
-    ctx.scale(sc,sc);
-    // draw an orange elliplse shape for prototype
-    ctx.fillStyle = '#ff9e22'; 
-    ctx.beginPath(); 
-    ctx.ellipse(0, 0, fish.r * 1.4, fish.r, 0, 0, Math.PI * 2); 
-    ctx.fill();
+function drawPlayerFish() {
+  ctx.save(); 
+  ctx.translate(fish.x, fish.y); 
+  ctx.rotate(fish.angle); 
   
-    ctx.restore();
+  const sc = fish.shrink > 0.5 ? 0.65 : 1; 
+  ctx.scale(sc, sc);
+
+  const tail = Math.sin(fish.phase) * 5;
+  
+  // Draw Tail
+  ctx.fillStyle = '#ff7b00'; 
+  ctx.beginPath(); 
+  ctx.moveTo(-fish.r, 0); 
+  ctx.lineTo(-fish.r*2, -fish.r*0.8 + tail); 
+  ctx.lineTo(-fish.r*2, fish.r*0.8 + tail); 
+  ctx.fill();
+  
+  // Draw Body
+  ctx.fillStyle = '#ff9e22'; 
+  ctx.beginPath(); 
+  ctx.ellipse(0, 0, fish.r*1.4, fish.r, 0, 0, Math.PI*2); 
+  ctx.fill();
+  
+  // Draw Face
+  ctx.fillStyle = '#fff'; 
+  ctx.beginPath(); 
+  ctx.arc(fish.r*0.6, -fish.r*0.3, fish.r*0.3, 0, Math.PI*2); 
+  ctx.fill();
+  
+  ctx.fillStyle = '#000'; 
+  ctx.beginPath(); 
+  ctx.arc(fish.r*0.7, -fish.r*0.3, fish.r*0.15, 0, Math.PI*2); 
+  ctx.fill();
+  
+  ctx.restore();
 }
