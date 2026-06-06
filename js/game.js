@@ -1,27 +1,19 @@
-//
-const distEl=document.getElementById('dist-val');
-const scoreEl=document.getElementById('score-val');
-
-// menu
-const startScreen=document.getElementById('start-screen');
-const gameOverScreen=document.getElementById('game-over-screen');
-const hud=document.getElementById('hud');
-
-document.getElementById('start-btn').addEventListener('click',resetAndPlay);
-document.getElementById('restart-btn').addEventListener('click',resetAndPlay);
+document.getElementById('startBtn').addEventListener('click',resetAndPlay);
+document.getElementById('restartBtn').addEventListener('click',resetAndPlay);
 
 function resetAndPlay(){
   state.phase='playing';
 
-  //hide menu and show hud
-  startScreen.style.display='none';
-  gameOverScreen.style.display='none';
-  hud.style.display='flex';
+  // hide menus using the new 'hide' CSS class
+  UI.menu.classList.add('hide');
+  UI.gameOver.classList.add('hide');
 
   //reset world
   world.scroll=0;
   fish.x=W*0.25;
   fish.y=H*0.5;
+  fish.hp = fish.maxHp;
+  if (typeof updateHealthBar === 'function') updateHealthBar();
   fish.vx=0;
   fish.vy=0;
   entities.segments=[];
@@ -36,11 +28,12 @@ function resetAndPlay(){
 function triggerGameOver(){
   state.phase='gameover';
   
-  document.getElementById('final-dist').innerText=Math.floor(state.distance);
-  document.getElementById('final-score').innerText=state.score;
+  // Update the new final score IDs
+  UI.finalDistance.innerText=Math.floor(state.distance);
+  UI.finalPearls.innerText=state.score;
 
-  hud.style.display='none';
-  gameOverScreen.style.display='block';
+  // Show the game over screen by removing the 'hide' class
+  UI.gameOver.classList.remove('hide');
 }
 
 
@@ -62,7 +55,7 @@ function update(dt) {
   const hitJelly = typeof checkJellyCollisions === 'function' && checkJellyCollisions();
 
   if (hitWall || hitJelly) {
-    triggerGameOver();
+    if (typeof takeDamage === 'function') takeDamage();
   }
 }
 
@@ -83,8 +76,8 @@ function draw() {
   drawPlayerFish();  // draw fish
 
  // score of pearl and distance
- distEl.innerText=Math.floor(state.distance);
- scoreEl.innerText=state.score;
+if (UI.distance) UI.distance.innerText = Math.floor(state.distance);
+  if (UI.pearls) UI.pearls.innerText = state.score;
 
 }
 

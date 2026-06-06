@@ -6,6 +6,16 @@ let H = window.innerHeight;
 canvas.width = W;
 canvas.height = H;
 
+const UI = {
+  distance: document.getElementById('distance'),
+  pearls: document.getElementById('pearls'),
+  finalDistance: document.getElementById('finalDistance'),
+  finalPearls: document.getElementById('finalPearls'),
+  hp: document.getElementById('hpBar'),
+  menu: document.getElementById('menuScreen'),
+  gameOver: document.getElementById('gameOverScreen')
+};
+
 // Math helpers 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 const rand = (min, max) => Math.random() * (max - min) + min;
@@ -32,7 +42,10 @@ const fish = {
     dashT: 0,    // dash time
     shrink: 0,   //shrink ability
     angle: 0,   //  tilting up and down
-    phase: 0    // tail wagging 
+    phase: 0 ,   // tail wagging 
+    hp:3,
+    maxHp:3,
+    invuln:0
 };
 
 function updateArray(arr,fn){
