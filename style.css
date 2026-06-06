@@ -75,6 +75,7 @@ canvas {
   transition: width 0.2s ease; 
 }
 
+/* --- Menus & Cards --- */
 .center { 
   position: fixed; 
   inset: 0; 
@@ -101,9 +102,9 @@ canvas {
   animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
 }
 
-h1 { 
+.card h1 { 
   margin: 0 0 10px; 
-  font-size: 38px; 
+  font-size: 48px; 
   letter-spacing: 1px; 
   background: linear-gradient(to right, #fff, #a3d9ff); 
   -webkit-background-clip: text; 
@@ -111,11 +112,28 @@ h1 {
   -webkit-text-fill-color: transparent; 
 }
 
-p { 
+.card p { 
   margin: 10px 0; 
   line-height: 1.6; 
   color: var(--muted); 
   font-size: 16px; 
+}
+
+.hint-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+  gap: 12px; 
+  margin-top: 20px; 
+  text-align: left; 
+  font-size: 14px; 
+  color: rgba(255,255,255,0.9); 
+}
+
+.hint-grid div { 
+  background: rgba(255,255,255,0.08); 
+  border: 1px solid rgba(255,255,255,0.1); 
+  border-radius: 12px; 
+  padding: 12px; 
 }
 
 .btnrow { 
@@ -126,11 +144,11 @@ p {
   margin-top: 24px; 
 }
 
-button { 
+.btnrow button { 
   border: 1px solid rgba(255,255,255,0.2); 
   border-radius: 16px; 
-  padding: 14px 24px; 
-  font-size: 16px; 
+  padding: 15px 30px; 
+  font-size: 18px; 
   font-weight: 700; 
   cursor: pointer; 
   background: linear-gradient(135deg, var(--accent1), var(--accent2)); 
@@ -141,13 +159,12 @@ button {
   letter-spacing: 1px; 
 }
 
-button:hover { 
+.btnrow button:hover { 
   transform: translateY(-2px); 
   filter: brightness(1.1); 
-  background-color: #ff8e52; 
 }
 
-button:active { 
+.btnrow button:active { 
   transform: translateY(1px) scale(0.98); 
 }
 
