@@ -2,8 +2,8 @@ document.getElementById('startBtn').addEventListener('click',resetAndPlay);
 document.getElementById('restartBtn').addEventListener('click',resetAndPlay);
 
 function resetAndPlay(){
-  state.phase='playing';
-
+  state.phase='ocean';
+  UI.stage.textContent='Open Sea'
   // hide menus using the new 'hide' CSS class
   UI.menu.classList.add('hide');
   UI.gameOver.classList.add('hide');
@@ -38,9 +38,11 @@ function triggerGameOver(){
 
 
 function update(dt) {
+  world.difficulty+=dt*0.15
+
    if (typeof updateBackgroundLogic === 'function') updateBackgroundLogic(dt); // move background
 
-   if(state.phase !=='playing')return; // only run physics if playing
+   if(state.phase ==='start' || state.phase==='gameover')return; // only run physics if playing
 
    updateFishPhysics(dt);
    if (typeof updateObstacles === 'function') updateObstacles(dt);

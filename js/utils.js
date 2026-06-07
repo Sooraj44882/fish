@@ -13,7 +13,8 @@ const UI = {
   finalPearls: document.getElementById('finalPearls'),
   hp: document.getElementById('hpBar'),
   menu: document.getElementById('menuScreen'),
-  gameOver: document.getElementById('gameOverScreen')
+  gameOver: document.getElementById('gameOverScreen'),
+  stage:document.getElementById('stageIndicator')
 };
 
 // Math helpers 
@@ -21,12 +22,12 @@ const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 const rand = (min, max) => Math.random() * (max - min) + min;
 
 // background fish and turtles
-const world={speed:280, scroll:0};
+const world={speed:280, scroll:0, difficulty:0};
 
 // Added state to track the phases. 
 let state = {
   segmentCount: 0, 
-  phase: 'start' ,
+  phase: 'ocean' ,
   score:0
 };
 
