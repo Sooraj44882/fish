@@ -27,26 +27,23 @@ function spawnSegment(x) {
     gap = Math.max(160, 260 - world.difficulty * 2 + Math.sin(x * 0.01) * 20);
     cY  = Math.min(Math.max(lastY + wave * 0.1 + rand(-20, 20), 100), H - 100);
   }
-  
   entities.segments.push({ x, w: segmentWidth, cY, gap });
-  // spawn Jellyfish 
-  if (Math.random() < 0.15 && index > 5) {
+  
+  
+  // Jellyfish only appear in cave
+  if (state.phase === 'cave' && Math.random() < 0.15 && index > 5) {
     entities.jellyfish.push({
       x: x + segmentWidth / 2,
-      y: cY + rand(-40, 40),   
-      r: 15,                   
-      phase: rand(0, Math.PI * 2) 
+      y: cY + rand(-40, 40),
+      r: 15,
+      phase: rand(0, Math.PI * 2)
     });
   }
 
-  // spawn pearls
-  if(Math.random()<0.20 && index>3){
-    entities.pearls.push({
-      x:x+ segmentWidth/2,
-      y:cY+rand(-30,30),
-      r:20,
-      phase:rand(0,Math.PI*2)
-    });
+  // Pearls spawn in all phases
+  if (Math.random() < 0.20 && index > 3) {
+    const playY = state.phase === 'ocean' ? rand(100, H - 100) : cY + rand(-30, 30);
+    entities.pearls.push({ x: x + segmentWidth / 2, y: playY, r: 20, phase: rand(0, Math.PI * 2) });
   }
 }
 
