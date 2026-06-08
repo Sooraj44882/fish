@@ -10,7 +10,8 @@ function takeDamage() {
   if (fish.invuln > 0) return; // prevent taking damage twice instantly
   
   state.screenShake=15;
-  
+  spawnParticles(fish.x,fish.y,25,200, '#ff4a4a');
+
   fish.hp--; 
   updateHealthBar(); 
   fish.invuln = 1.5; // flash for 1.5 seconds

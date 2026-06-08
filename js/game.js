@@ -1,6 +1,19 @@
 document.getElementById('startBtn').addEventListener('click',resetAndPlay);
 document.getElementById('restartBtn').addEventListener('click',resetAndPlay);
 
+function spawnParticles(x, y, count, power, color) {
+  for (let i = 0; i < count; i++) {
+    entities.particles.push({
+      x, y,
+      vx: rand(-power, power),
+      vy: rand(-power, power),
+      r: rand(2, 6),
+      life: rand(0.4, 0.8),
+      c: color
+    });
+  }
+}
+
 function resetAndPlay(){
   state.phase='ocean';
   UI.stage.textContent='Open Sea'
@@ -40,6 +53,14 @@ function triggerGameOver(){
 function update(dt) {
   world.difficulty+=dt*0.15
   state.screenShake*=0.85;
+  // adding red particle when fish damage
+  updateArray(entities.particles, (p) => {
+    p.x += p.vx * dt;
+    p.y += p.vy * dt;
+    p.vy += 300 * dt;
+    p.life -= dt;
+    return p.life > 0;
+  });
 
    if (typeof updateBackgroundLogic === 'function') updateBackgroundLogic(dt); // move background
 
@@ -87,6 +108,15 @@ function draw() {
  // score of pearl and distance
 if (UI.distance) UI.distance.innerText = Math.floor(state.distance);
   if (UI.pearls) UI.pearls.innerText = state.score;
+
+entities.particles.forEach(p => {
+  ctx.globalAlpha = p.life;
+  ctx.fillStyle = p.c;
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+  ctx.fill();
+});
+ctx.globalAlpha = 1;
 
   ctx.restore();
 }
