@@ -28,7 +28,8 @@ const world={speed:280, scroll:0, difficulty:0};
 let state = {
   segmentCount: 0, 
   phase: 'ocean' ,
-  score:0
+  score:0,
+  screenShake:0
 };
 
 const entities={bgFish:[], turtles:[],segments:[],jellyfish:[],pearls:[]};

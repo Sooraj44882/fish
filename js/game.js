@@ -39,6 +39,7 @@ function triggerGameOver(){
 
 function update(dt) {
   world.difficulty+=dt*0.15
+  state.screenShake*=0.85;
 
    if (typeof updateBackgroundLogic === 'function') updateBackgroundLogic(dt); // move background
 
@@ -62,6 +63,12 @@ function update(dt) {
 }
 
 function draw() {
+
+  ctx.save();
+  if (state.screenShake>0){
+    const s=state.screenShake;
+    ctx.translate(rand(-s,s), rand(-s,s));
+  }
   // Paint the canvas a ocean blue using background js
   if(typeof drawBackground==='function') drawBackground();
 
@@ -81,6 +88,7 @@ function draw() {
 if (UI.distance) UI.distance.innerText = Math.floor(state.distance);
   if (UI.pearls) UI.pearls.innerText = state.score;
 
+  ctx.restore();
 }
 
 let rafId = 0;
