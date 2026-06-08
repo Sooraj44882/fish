@@ -32,7 +32,8 @@ let state = {
   screenShake:0
 };
 
-const entities={bgFish:[], turtles:[],segments:[],jellyfish:[],pearls:[],particles:[]};
+const entities={bgFish:[], turtles:[],segments:[],
+  jellyfish:[],pearls:[],particles:[],floatingTexts:[]};
 
 const fish = {
     x: W * 0.25,

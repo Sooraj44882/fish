@@ -188,6 +188,7 @@ function checkPearlCollisions(){
     // increasse the score and delete the pearls
     if(dist<fish.r+p.r){
       state.score+=1;
+      floatingText(x,p.y,'+1', '#ffe47a'); // colleting +1
       return false;
     }
     return true;

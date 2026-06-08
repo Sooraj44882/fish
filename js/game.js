@@ -1,6 +1,7 @@
 document.getElementById('startBtn').addEventListener('click',resetAndPlay);
 document.getElementById('restartBtn').addEventListener('click',resetAndPlay);
 
+//red damage effect
 function spawnParticles(x, y, count, power, color) {
   for (let i = 0; i < count; i++) {
     entities.particles.push({
@@ -12,6 +13,10 @@ function spawnParticles(x, y, count, power, color) {
       c: color
     });
   }
+}
+// colleting pearls effect
+function floatingText(x, y, text, color) {
+  entities.floatingTexts.push({ x, y, text, color, life: 1.0 });
 }
 
 function resetAndPlay(){
@@ -62,6 +67,13 @@ function update(dt) {
     return p.life > 0;
   });
 
+  // effect when it collect pearls
+updateArray(entities.floatingTexts, (ft) => {
+  ft.life -= dt;
+  ft.y -= dt * 40;  // drifts upward
+  return ft.life > 0;
+});
+
    if (typeof updateBackgroundLogic === 'function') updateBackgroundLogic(dt); // move background
 
    if(state.phase ==='start' || state.phase==='gameover')return; // only run physics if playing
@@ -109,6 +121,7 @@ function draw() {
 if (UI.distance) UI.distance.innerText = Math.floor(state.distance);
   if (UI.pearls) UI.pearls.innerText = state.score;
 
+  // red damage
 entities.particles.forEach(p => {
   ctx.globalAlpha = p.life;
   ctx.fillStyle = p.c;
@@ -116,8 +129,20 @@ entities.particles.forEach(p => {
   ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
   ctx.fill();
 });
-ctx.globalAlpha = 1;
 
+// collecting pearls
+ctx.font = 'bold 18px "Segoe UI"';
+ctx.textAlign = 'center';
+entities.floatingTexts.forEach(ft => {
+  ctx.globalAlpha = Math.min(1, ft.life * 2);
+  ctx.fillStyle = ft.color;
+  ctx.fillText(ft.text, ft.x, ft.y);
+  ctx.strokeStyle = '#000';
+  ctx.lineWidth = 2;
+  ctx.strokeText(ft.text, ft.x, ft.y);
+});
+
+ctx.globalAlpha = 1;
   ctx.restore();
 }
 
