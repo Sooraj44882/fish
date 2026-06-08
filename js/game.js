@@ -41,6 +41,9 @@ function resetAndPlay(){
   state.score=0;
   state.distance=0;
 
+  if (rafId) cancelAnimationFrame(rafId);  // prevent double loops on restart
+  lastTime = performance.now();
+  rafId = requestAnimationFrame(loop);
 }
 
 function triggerGameOver(){
@@ -161,6 +164,4 @@ function loop(now) {
 
 // Spawn the scenery before starting the loop
 if (typeof initBackground === 'function') initBackground();
-
-// Start the engine
-loop(performance.now());
+draw(); // just draws the menu background once no loop
