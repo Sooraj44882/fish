@@ -10,6 +10,8 @@ function takeDamage() {
   if (fish.invuln > 0) return; // prevent taking damage twice instantly
   
   state.screenShake=15;
+  state.multiplier=1;
+  UI.mult.textContent='x1';
   spawnParticles(fish.x,fish.y,25,200, '#ff4a4a');
 
   fish.hp--; 

@@ -186,9 +186,17 @@ function checkPearlCollisions(){
     const dist=Math.hypot(fish.x-x,fish.y-p.y);  // distance between fish and pearl
 
     // increasse the score and delete the pearls
-    if(dist<fish.r+p.r){
-      state.score+=1;
-      floatingText(x,p.y,'+1', '#ffe47a'); // colleting +1
+    if (dist < fish.r + p.r) {
+      state.comboTimer = 2.0;
+      state.multiplier = Math.min(5, state.multiplier + 0.2);
+      const m = Math.floor(state.multiplier);
+
+      UI.mult.textContent = `x${m}`;
+      UI.mult.style.color = m >= 5 ? '#ff4a4a' : m >= 3 ? '#ff9e4a' : '#ffdb4d';
+
+      const gained = 1 * m;
+      state.score += gained;
+      floatingText(x, p.y, `+${gained}`, '#ffe47a');
       return false;
     }
     return true;

@@ -40,6 +40,9 @@ function resetAndPlay(){
   state.segmentCount=0;
   state.score=0;
   state.distance=0;
+  state.multiplier = 1;    
+  state.comboTimer = 0;    
+  UI.mult.textContent = 'x1';   
 
   if (rafId) cancelAnimationFrame(rafId);  // prevent double loops on restart
   lastTime = performance.now();
@@ -61,6 +64,16 @@ function triggerGameOver(){
 function update(dt) {
   world.difficulty+=dt*0.15
   state.screenShake*=0.85;
+
+  if (state.comboTimer > 0) {
+  state.comboTimer -= dt;
+  if (state.comboTimer <= 0) {
+    state.multiplier = 1;
+    UI.mult.textContent = 'x1';
+    UI.mult.style.color = '#fff';
+  }
+}
+
   // adding red particle when fish damage
   updateArray(entities.particles, (p) => {
     p.x += p.vx * dt;
