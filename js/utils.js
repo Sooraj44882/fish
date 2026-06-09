@@ -9,6 +9,7 @@ canvas.height = H;
 const UI = {
   distance: document.getElementById('distance'),
   pearls: document.getElementById('pearls'),
+  mult:document.getElementById('multiplier'),
   finalDistance: document.getElementById('finalDistance'),
   finalPearls: document.getElementById('finalPearls'),
   hp: document.getElementById('hpBar'),
@@ -48,7 +49,9 @@ const fish = {
     phase: 0 ,   // tail wagging 
     hp:3,
     maxHp:3,
-    invuln:0
+    invuln:0,
+    multiplier:1,
+    comboTimer:0
 };
 
 function updateArray(arr,fn){
