@@ -23,7 +23,7 @@ const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 const rand = (min, max) => Math.random() * (max - min) + min;
 
 // background fish and turtles
-const world={speed:280, scroll:0, difficulty:0};
+const world={speed:280, targetSpeed:280, scroll:0, difficulty:0};
 
 // Added state to track the phases. 
 let state = {

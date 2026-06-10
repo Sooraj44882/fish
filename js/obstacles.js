@@ -188,7 +188,7 @@ function checkPearlCollisions(){
     // increasse the score and delete the pearls
     if (dist < fish.r + p.r) {
       state.comboTimer = 2.0;
-      state.multiplier = Math.min(5, state.multiplier + 0.2);
+      state.multiplier = Math.min(5, state.multiplier + 1);
       const m = Math.floor(state.multiplier);
 
       UI.mult.textContent = `x${m}`;

@@ -28,6 +28,10 @@ function resetAndPlay(){
 
   //reset world
   world.scroll=0;
+  world.speed = 280;         
+  world.targetSpeed = 280;    
+  world.difficulty = 0;  
+
   fish.x=W*0.25;
   fish.y=H*0.5;
   fish.hp = fish.maxHp;
@@ -62,17 +66,28 @@ function triggerGameOver(){
 
 
 function update(dt) {
-  world.difficulty+=dt*0.15
+  world.difficulty+=dt*0.15;
+  
+  // Calculate the baseline speed (using const for a temporary variable)
+  const baseTargetSpeed = 280 + Math.min(120, world.difficulty * 15);
+  
+  // Spike the target speed to 450 if dashing, otherwise use the baseline
+  world.targetSpeed = fish.dashT > 0 ? 450 : baseTargetSpeed;
+
   state.screenShake*=0.85;
 
+  // Smoothly lerp actual speed toward the target speed
+  const lerpSpeed = fish.dashT > 0 ? 8 : 4;
+  world.speed += (world.targetSpeed - world.speed) * Math.min(1, dt * lerpSpeed);
+
   if (state.comboTimer > 0) {
-  state.comboTimer -= dt;
-  if (state.comboTimer <= 0) {
-    state.multiplier = 1;
-    UI.mult.textContent = 'x1';
-    UI.mult.style.color = '#fff';
+    state.comboTimer -= dt;
+    if (state.comboTimer <= 0) {
+      state.multiplier = 1;
+      UI.mult.textContent = 'x1';
+      UI.mult.style.color = '#fff';
+    }
   }
-}
 
   // adding red particle when fish damage
   updateArray(entities.particles, (p) => {
