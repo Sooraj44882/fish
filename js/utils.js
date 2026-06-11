@@ -15,7 +15,8 @@ const UI = {
   hp: document.getElementById('hpBar'),
   menu: document.getElementById('menuScreen'),
   gameOver: document.getElementById('gameOverScreen'),
-  stage:document.getElementById('stageIndicator')
+  stage:document.getElementById('stageIndicator'),
+  shield:document.getElementById('iconShield')
 };
 
 // Math helpers 
@@ -34,7 +35,7 @@ let state = {
 };
 
 const entities={bgFish:[], turtles:[],segments:[],
-  jellyfish:[],pearls:[],particles:[],floatingTexts:[]};
+  jellyfish:[],pearls:[],particles:[],floatingTexts:[],powerups:[]};
 
 const fish = {
     x: W * 0.25,
@@ -51,7 +52,8 @@ const fish = {
     maxHp:3,
     invuln:0,
     multiplier:1,
-    comboTimer:0
+    comboTimer:0,
+    buffs:{shield:0}
 };
 
 function updateArray(arr,fn){
