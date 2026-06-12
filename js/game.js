@@ -46,7 +46,9 @@ function resetAndPlay(){
   state.distance=0;
   state.multiplier = 1;    
   state.comboTimer = 0;    
-  UI.mult.textContent = 'x1';   
+  UI.mult.textContent = 'x1';  
+  fish.buffs.shield=0;
+  UI.shield.style.display='none'; 
 
   if (rafId) cancelAnimationFrame(rafId);  // prevent double loops on restart
   lastTime = performance.now();

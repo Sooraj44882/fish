@@ -14,6 +14,15 @@ function takeDamage() {
   UI.mult.textContent='x1';
   spawnParticles(fish.x,fish.y,25,200, '#ff4a4a');
 
+
+    if (fish.buffs.shield > 0) {
+    fish.buffs.shield = 0;
+    fish.invuln = 1.5;
+    UI.shield.style.display = 'none';
+    floatingText(fish.x, fish.y, "SHIELD BROKEN!", "#49c7ff");
+    return;
+  }
+
   fish.hp--; 
   updateHealthBar(); 
   fish.invuln = 1.5; // flash for 1.5 seconds
@@ -100,6 +109,12 @@ function drawPlayerFish() {
     
     const sc = fish.shrink > 0.5 ? 0.65 : 1; 
     ctx.scale(sc, sc);
+
+  if (fish.buffs.shield > 0) {
+    ctx.fillStyle = 'rgba(73, 199, 255, 0.4)'; 
+    ctx.beginPath(); ctx.arc(0, 0, fish.r * 2.2, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+  }
 
     const tail = Math.sin(fish.phase) * 5;
     

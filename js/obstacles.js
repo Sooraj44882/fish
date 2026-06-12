@@ -49,16 +49,6 @@ if (Math.random() < 0.20 && index > 3) {
 } else if (Math.random() < 0.04) {
   entities.powerups.push({ x: midX, y: playY, r: 12, type: 'shield', p: rand(0, 7) });
 }
-
-  else if(Math.random()<0.04){
-    entities.powerups.push({
-      x:midX,
-      y:playY,
-      r:12,
-      type:'shield',
-      p:rand(0,7)
-    });
-  }
 }
 
 function updateObstacles(dt) {
@@ -83,6 +73,22 @@ function updateObstacles(dt) {
     j.y += Math.sin(performance.now() * 0.003 + j.phase) * 60 * dt;
     return (j.x - world.scroll > -100);
   });
+
+  //shields
+  updateArray(entities.powerups, (p) => {
+  const x = p.x - world.scroll; if (x < -100) return false;
+  p.p += dt * 2;
+  p.y += Math.sin(p.p) * 0.4;  // gentle bob
+
+  if (circleHit(fish.x, fish.y, fish.r, x, p.y, p.r + 5)) {
+    fish.buffs.shield = 1;
+    UI.shield.style.display = 'flex';
+    floatingText(x, p.y, "SHIELD!", "#49c7ff");
+    spawnParticles(x, p.y, 15, 120, '#49c7ff');
+    return false;
+  }
+  return true;
+});
 }
 
 function drawObstacles() {

@@ -22,7 +22,8 @@ const UI = {
 // Math helpers 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 const rand = (min, max) => Math.random() * (max - min) + min;
-
+// shield
+const circleHit = (x1, y1, r1, x2, y2, r2) => Math.hypot(x1 - x2, y1 - y2) < r1 + r2;
 // background fish and turtles
 const world={speed:280, targetSpeed:280, scroll:0, difficulty:0};
 
