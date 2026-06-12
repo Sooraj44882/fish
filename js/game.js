@@ -129,31 +129,20 @@ updateArray(entities.floatingTexts, (ft) => {
 }
 
 function draw() {
+  if(typeof drawBackground==='function') drawBackground();
+  if (typeof drawObstacles === 'function') drawObstacles();
+  if(typeof drawPearls==='function') drawPearls();
+  if (typeof drawJellyfish === 'function') drawJellyfish();
 
+  drawPlayerFish();  // draw fish
+
+// Only particles and text shake
   ctx.save();
   if (state.screenShake>0){
     const s=state.screenShake;
     ctx.translate(rand(-s,s), rand(-s,s));
   }
-  // Paint the canvas a ocean blue using background js
-  if(typeof drawBackground==='function') drawBackground();
-
-
-  // Draw the cave walls BEFORE we draw the fish, so the fish is on top
-  if (typeof drawObstacles === 'function') drawObstacles();
-
-  // draw the pearls
-  if(typeof drawPearls==='function') drawPearls();
-
-  // draw jellyfish before the player fish
-  if (typeof drawJellyfish === 'function') drawJellyfish();
-
-  drawPlayerFish();  // draw fish
-
- // score of pearl and distance
-if (UI.distance) UI.distance.innerText = Math.floor(state.distance);
-  if (UI.pearls) UI.pearls.innerText = state.score;
-
+ 
   // red damage
 entities.particles.forEach(p => {
   ctx.globalAlpha = p.life;
@@ -177,6 +166,10 @@ entities.floatingTexts.forEach(ft => {
 
 ctx.globalAlpha = 1;
   ctx.restore();
+
+  // score of pearl and distance
+if (UI.distance) UI.distance.innerText = Math.floor(state.distance);
+if (UI.pearls) UI.pearls.innerText = state.score;
 }
 
 let rafId = 0;
