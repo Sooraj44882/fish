@@ -181,3 +181,4 @@ canvas {
 .buff-icon{width: 24px; height: 24px; border-radius: 50%; border: 2px solid white;
 display: none; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; }
 .buff-shield{ background: rgba(73, 199, 255, 0.5); }
+.buff-magnet{background: rgba(186,85,211,0.5);}

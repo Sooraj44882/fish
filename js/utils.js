@@ -16,7 +16,8 @@ const UI = {
   menu: document.getElementById('menuScreen'),
   gameOver: document.getElementById('gameOverScreen'),
   stage:document.getElementById('stageIndicator'),
-  shield:document.getElementById('iconShield')
+  shield:document.getElementById('iconShield'),
+  magnet:document.getElementById('iconMagnet'),
 };
 
 // Math helpers 
@@ -54,7 +55,7 @@ const fish = {
     invuln:0,
     multiplier:1,
     comboTimer:0,
-    buffs:{shield:0}
+    buffs:{shield:0,magnet:0}
 };
 
 function updateArray(arr,fn){

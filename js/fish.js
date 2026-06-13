@@ -111,10 +111,16 @@ function drawPlayerFish() {
     ctx.scale(sc, sc);
 
   if (fish.buffs.shield > 0) {
-    ctx.fillStyle = 'rgba(73, 199, 255, 0.4)'; 
-    ctx.beginPath(); ctx.arc(0, 0, fish.r * 2.2, 0, Math.PI * 2); ctx.fill();
-    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
-  }
+  ctx.fillStyle = 'rgba(73, 199, 255, 0.55)'; 
+  ctx.beginPath(); ctx.arc(0, 0, fish.r * 2.2, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = '#49c7ff'; ctx.lineWidth = 3; ctx.stroke();  
+}
+
+  if (fish.buffs.magnet > 0) {
+  ctx.fillStyle = 'rgba(186, 85, 211, 0.45)';  
+  ctx.beginPath(); ctx.arc(0, 0, fish.r * 3, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = '#ba55d3'; ctx.lineWidth = 3; ctx.stroke(); 
+}
 
     const tail = Math.sin(fish.phase) * 5;
     

@@ -47,7 +47,7 @@ const playY = state.phase === 'ocean' ? rand(100, H - 100) : cY + rand(-30, 30);
 if (Math.random() < 0.20 && index > 3) {
   entities.pearls.push({ x: midX, y: playY, r: 20, phase: rand(0, Math.PI * 2) });
 } else if (Math.random() < 0.04) {
-  entities.powerups.push({ x: midX, y: playY, r: 12, type: 'shield', p: rand(0, 7) });
+  entities.powerups.push({ x: midX, y: playY, r: 12, type: Math.random() < 0.5 ? 'shield' : 'magnet', p: rand(0, 7) });
 }
 }
 
@@ -112,14 +112,15 @@ function drawObstacles() {
 
 entities.powerups.forEach(p => {
   const x = p.x - world.scroll; if (x < -50 || x > W + 50) return;
+  const c1 = p.type === 'shield' ? '#49c7ff' : '#ba55d3';  // blue or purple
   ctx.save(); ctx.translate(x, p.y);
-  ctx.fillStyle = '#49c7ff'; 
+  ctx.fillStyle = c1;
   ctx.globalAlpha = 0.4 + Math.sin(p.p) * 0.2;
   ctx.beginPath(); ctx.arc(0, 0, p.r + 6, 0, Math.PI * 2); ctx.fill();
-  ctx.globalAlpha = 1; 
-  ctx.fillStyle = '#fff'; 
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = '#fff';
   ctx.beginPath(); ctx.arc(0, 0, p.r, 0, Math.PI * 2); ctx.fill();
-  ctx.fillStyle = '#49c7ff'; 
+  ctx.fillStyle = c1;
   ctx.beginPath(); ctx.arc(0, 0, p.r * 0.6, 0, Math.PI * 2); ctx.fill();
   ctx.restore();
 });
