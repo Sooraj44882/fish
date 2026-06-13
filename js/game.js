@@ -48,8 +48,9 @@ function resetAndPlay(){
   state.comboTimer = 0;    
   UI.mult.textContent = 'x1';  
   fish.buffs.shield=0;
+  fish.buffs.magnet=0;
   UI.shield.style.display='none'; 
-
+  UI.magnet.style.display='none';
   if (rafId) cancelAnimationFrame(rafId);  // prevent double loops on restart
   lastTime = performance.now();
   rafId = requestAnimationFrame(loop);
@@ -117,7 +118,7 @@ updateArray(entities.floatingTexts, (ft) => {
   state.distance+=world.speed*dt*0.01;
 
    // check if fish touch the pearls
-   if(typeof checkPearlCollisions==='function') checkPearlCollisions();
+   if(typeof checkPearlCollisions==='function') checkPearlCollisions(dt);
   
    //  crash logic for both  cave Walls and Jellyfish 
   const hitWall = typeof checkWallCollisions === 'function' && checkWallCollisions();

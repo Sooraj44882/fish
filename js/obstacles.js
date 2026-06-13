@@ -81,12 +81,20 @@ function updateObstacles(dt) {
   p.y += Math.sin(p.p) * 0.4;  // gentle bob
 
   if (circleHit(fish.x, fish.y, fish.r, x, p.y, p.r + 5)) {
+  if (p.type === 'shield') {
     fish.buffs.shield = 1;
     UI.shield.style.display = 'flex';
     floatingText(x, p.y, "SHIELD!", "#49c7ff");
     spawnParticles(x, p.y, 15, 120, '#49c7ff');
-    return false;
   }
+  if (p.type === 'magnet') {
+    fish.buffs.magnet = 10;  // 10 seconds
+    UI.magnet.style.display = 'flex';
+    floatingText(x, p.y, "MAGNET!", "#ba55d3");
+    spawnParticles(x, p.y, 15, 120, '#ba55d3');
+  }
+  return false;
+}
   return true;
 });
 }
@@ -213,11 +221,17 @@ function drawPearls(){
 
 // collect pearls
 
-function checkPearlCollisions(){
+function checkPearlCollisions(dt){
   updateArray(entities.pearls,(p)=>{
     const x=p.x-world.scroll;
 
     const dist=Math.hypot(fish.x-x,fish.y-p.y);  // distance between fish and pearl
+
+    if (fish.buffs.magnet > 0 && dist < 250) {
+      const pull = (250 - dist) * 2 * dt;
+      p.x -= (x - fish.x) / dist * pull;
+      p.y -= (p.y - fish.y) / dist * pull;
+    }
 
     // increasse the score and delete the pearls
     if (dist < fish.r + p.r) {

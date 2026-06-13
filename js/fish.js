@@ -97,6 +97,12 @@ fish.dashT=Math.max(0,fish.dashT-dt);
   // Tick down invincibility
   if (fish.invuln > 0) fish.invuln -= dt;
 
+  // ADD THIS
+if (fish.buffs.magnet > 0) {
+  fish.buffs.magnet -= dt;
+  UI.magnet.style.display = fish.buffs.magnet > 0 ? 'flex' : 'none';
+}
+
 }
 
 function drawPlayerFish() {
@@ -118,7 +124,7 @@ function drawPlayerFish() {
 
   if (fish.buffs.magnet > 0) {
   ctx.fillStyle = 'rgba(186, 85, 211, 0.45)';  
-  ctx.beginPath(); ctx.arc(0, 0, fish.r * 3, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(0, 0, fish.r * 2.5, 0, Math.PI * 2); ctx.fill();
   ctx.strokeStyle = '#ba55d3'; ctx.lineWidth = 3; ctx.stroke(); 
 }
 
