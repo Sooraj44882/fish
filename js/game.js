@@ -21,7 +21,8 @@ function floatingText(x, y, text, color) {
 
 function resetAndPlay(){
   state.phase='ocean';
-  UI.stage.textContent='Open Sea'
+  UI.stage.textContent='Open Sea';
+  if (UI.stage) UI.stage.textContent="Open Sea";
   // hide menus using the new 'hide' CSS class
   UI.menu.classList.add('hide');
   UI.gameOver.classList.add('hide');
@@ -105,7 +106,7 @@ function update(dt) {
 updateArray(entities.floatingTexts, (ft) => {
   ft.life -= dt;
   ft.y -= dt * 40;  // drifts upward
-  return ft.life > 0;
+  return ft.life > 0; 
 });
 
    if (typeof updateBackgroundLogic === 'function') updateBackgroundLogic(dt); // move background

@@ -39,8 +39,16 @@ function updateBackgroundLogic(dt){
 // draw
 function drawBackground(){
     const bgGrad=ctx.createLinearGradient(0,0,0,H);
+    if(state.phase === 'ocean'){
     bgGrad.addColorStop(0,'#6fc9fe');
-    bgGrad.addColorStop(1,'#075786');    // top blue 
+    bgGrad.addColorStop(1,'#075786');} 
+    else if(state.phase === 'cave'){
+    bgGrad.addColorStop(0,'#2d7cba');
+    bgGrad.addColorStop(1,'#083c61');}   
+    else {
+    bgGrad.addColorStop(0,'#10496b');
+    bgGrad.addColorStop(0.5,'#0a2a45');
+    bgGrad.addColorStop(1,'#03101c');}   
 
     ctx.fillStyle=bgGrad;
     ctx.fillRect(0,0,W,H);

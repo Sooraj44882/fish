@@ -4,8 +4,8 @@ function spawnSegment(x) {
   const index = state.segmentCount++;
 
   // ---- PHASE TRANSITIONS ----
-  if (index === 105) { state.phase = 'transition'; UI.stage.textContent = "Entering Cave..."; }
-  if (index === 135) { state.phase = 'cave';       UI.stage.textContent = "The Deep Cave"; }
+  if (index === 105) { state.phase = 'cave'; UI.stage.textContent="Cave";}
+  if (index === 210) { state.phase = 'darkcave'; UI.stage.textContent = "Deep Cave"; }
 
   const wave = Math.sin((x + world.scroll) * 0.007) * 40;
   let cY, gap;
