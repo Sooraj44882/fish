@@ -57,9 +57,17 @@ if(dashing && fish.dashCd<=0){
     fish.dashT=0.2;
     fish.dashCd=0.6;
 
-    fish.vx+=fish.vx===0 && fish.vy===0? 800: Math.sign(fish.vx)*800;
-    fish.vy+=Math.sign(fish.vy)*800;
-}
+    let dx=0 , dy=0;
+    if(keys.has('ArrowRight') || keys.has('KeyD')) dx=1;
+    if(keys.has('ArrowLeft') || keys.has('KeyA')) dx=-1;
+    if(keys.has('ArrowDown') || keys.has('KeyS')) dy=1; 
+    if(keys.has('ArrowUp') || keys.has('KeyW')) dy=-1;
+
+    if(dx===0 && dy===0) dx=1;
+
+    fish.vx+=dx*800;
+    fish.vy+=dy*800;
+  }      
 
 //timer
 fish.dashCd=Math.max(0,fish.dashCd -dt);
