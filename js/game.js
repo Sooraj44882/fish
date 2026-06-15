@@ -1,6 +1,15 @@
 document.getElementById('startBtn').addEventListener('click',resetAndPlay);
 document.getElementById('restartBtn').addEventListener('click',resetAndPlay);
 
+function resize(){
+    dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = Math.floor(W * dpr);
+    canvas.height = Math.floor(H * dpr);
+    ctx.scale(dpr, dpr);
+}
+
 //red damage effect
 function spawnParticles(x, y, count, power, color) {
   for (let i = 0; i < count; i++) {
@@ -187,6 +196,7 @@ function loop(now) {
   rafId = requestAnimationFrame(loop);
 }
 
-// Spawn the scenery before starting the loop
+resize();  
 if (typeof initBackground === 'function') initBackground();
-draw(); // just draws the menu background once no loop
+draw();
+window.addEventListener('resize', resize);

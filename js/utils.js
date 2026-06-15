@@ -1,10 +1,7 @@
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d', { alpha: false });
 
-let W = window.innerWidth;
-let H = window.innerHeight;
-canvas.width = W;
-canvas.height = H;
+let W=0 , H=0 , dpr=1;
 
 const UI = {
   distance: document.getElementById('distance'),
