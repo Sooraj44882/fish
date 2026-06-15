@@ -156,29 +156,25 @@ function checkWallCollisions() {
 function drawJellyfish() {
   entities.jellyfish.forEach(j => {
     const x = j.x - world.scroll;
-    if (x < -50 || x > W + 50) return; // do not draw if off screen
+    if (x < -50 || x > W + 50) return;
 
     ctx.save();
     ctx.translate(x, j.y);
-    
-    // glowing neon pink effect
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = '#f526f5';
-    ctx.fillStyle = 'rgba(255, 77, 255, 0.8)';
-    
-    // draw Jellyfish Dome
-    ctx.beginPath();
-    ctx.arc(0, 0, j.r, Math.PI, 0);
-    ctx.fill();
-    
-    // draw Tentacles
-    ctx.strokeStyle = 'rgba(255, 77, 255, 0.6)';
+
+    ctx.fillStyle = 'rgba(255, 100, 150, 0.3)';
+    ctx.beginPath(); ctx.arc(0, 0, j.r * 1.8, 0, Math.PI * 2); ctx.fill();
+
+    // dome
+    ctx.fillStyle = '#ff7aad';
+    ctx.beginPath(); ctx.arc(0, 0, j.r, Math.PI, 0); ctx.closePath(); ctx.fill();
+
+    // tentacles
+    ctx.strokeStyle = '#ffb3d1';
     ctx.lineWidth = 2;
-    for(let i = -2; i <= 2; i++) {
+    for(let i = -1; i <= 1; i++) {
       ctx.beginPath();
-      ctx.moveTo(i * 4, 0);
-      // make the tentacles wiggle using Math.sin
-      ctx.lineTo(i * 5 + Math.sin(performance.now() * 0.005 + j.phase) * 4, j.r * 1.5);
+      ctx.moveTo(i * j.r * 0.5, 0);
+      ctx.lineTo(i * j.r * 0.8, j.r * 1.5);
       ctx.stroke();
     }
     ctx.restore();
