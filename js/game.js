@@ -1,5 +1,26 @@
 document.getElementById('startBtn').addEventListener('click',resetAndPlay);
-document.getElementById('restartBtn').addEventListener('click',resetAndPlay);
+document.getElementById('restartBtn').addEventListener('click',returnToMainMenu);
+document.getElementById('chooseOrange').addEventListener('click', () => {
+  changeSelectedCharacter('orange');});
+document.getElementById('choosePuff').addEventListener('click', () => {
+  changeSelectedCharacter('puff');});
+
+function returnToMainMenu() {
+  UI.gameOver.classList.add('hide'); 
+  UI.menu.classList.remove('hide'); 
+}
+
+function changeSelectedCharacter(type) {
+  state.selectedFish = type;
+  document.getElementById('chooseOrange').classList.remove('selected');
+  document.getElementById('choosePuff').classList.remove('selected');
+  
+  if (type === 'orange') {
+    document.getElementById('chooseOrange').classList.add('selected');
+  } else {
+    document.getElementById('choosePuff').classList.add('selected');
+  }
+}
 
 function resize(){
     dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));

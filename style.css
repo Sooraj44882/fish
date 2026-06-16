@@ -182,3 +182,46 @@ canvas {
 display: none; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; }
 .buff-shield{ background: rgba(73, 199, 255, 0.5); }
 .buff-magnet{background: rgba(186,85,211,0.5);}
+
+.char-container {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.char-card {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: center;
+  
+  padding: 0 0 15px 0; 
+  overflow: hidden; 
+}
+
+.char-card.selected {
+  border-color: #49c7ff;
+  background: rgba(73, 199, 255, 0.08);
+}
+
+.char-img {
+  width: 100%;
+  height: 100px;
+  background: rgba(0, 0, 0, 0.35);
+  margin-bottom: 12px;
+}
+
+.char-card h3 {
+  margin: 0 0 5px 0;
+  font-size: 16px;
+  padding: 0 12px;
+}
+
+.char-card p {
+  margin: 0;
+  font-size: 12px !important;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 0 12px;
+}

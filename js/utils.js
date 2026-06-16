@@ -30,7 +30,8 @@ let state = {
   segmentCount: 0, 
   phase: 'ocean' ,
   score:0,
-  screenShake:0
+  screenShake:0,
+  selectedFish:'orange'
 };
 
 const entities={bgFish:[], turtles:[],segments:[],
