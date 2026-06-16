@@ -106,7 +106,7 @@ function update(dt) {
   const baseTargetSpeed = 280 + Math.min(120, world.difficulty * 15);
   
   // Spike the target speed to 450 if dashing, otherwise use the baseline
-  world.targetSpeed = fish.dashT > 0 ? 450 : baseTargetSpeed;
+  world.targetSpeed = fish.dashT > 0 ? 550 : baseTargetSpeed;
 
   state.screenShake*=0.85;
 

@@ -53,7 +53,7 @@ fish.vy +=ay*dt;
 const dashing=keys.has('ShiftLeft')|| keys.has('Space');
 
 //dash time and cooldown
-if(dashing && fish.dashCd<=0){
+if(dashing && fish.dashCd<=0 && state.selectedFish === 'orange'){
     fish.dashT=0.2;
     fish.dashCd=0.6;
 
@@ -88,7 +88,7 @@ fish.dashT=Math.max(0,fish.dashT-dt);
   fish.y +=fish.vy*dt;
 
   //shrink 
-  const isShrinking=keys.has('ControlLeft') || keys.has('KeyX');
+  const isShrinking=keys.has('ControlLeft') || keys.has('KeyX') && state.selectedFish==='puff';
 
   fish.shrink+=((isShrinking? 1 : 0)- fish.shrink)*Math.min(1,dt*15);
 
@@ -105,7 +105,6 @@ fish.dashT=Math.max(0,fish.dashT-dt);
   // Tick down invincibility
   if (fish.invuln > 0) fish.invuln -= dt;
 
-  // ADD THIS
 if (fish.buffs.magnet > 0) {
   fish.buffs.magnet -= dt;
   UI.magnet.style.display = fish.buffs.magnet > 0 ? 'flex' : 'none';
