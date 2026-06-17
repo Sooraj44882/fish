@@ -136,6 +136,8 @@ entities.powerups.forEach(p => {
 }
 // collision detection 
 function checkWallCollisions() {
+
+  const r=state.selectedFish==='puff' ? fish.r*(1.0-fish.shrink*0.1):fish.r;
   for (let seg of entities.segments) {
     // get the wall actual position on the screen
     const x = seg.x - world.scroll;
@@ -182,6 +184,8 @@ function drawJellyfish() {
 }
 
 function checkJellyCollisions() {
+  const r=state.selectedFish==='puff' ? fish.r*(1.0-fish.shrink*0.1):fish.r;
+
   for (let j of entities.jellyfish) {
     const x = j.x - world.scroll;
     // calculate the distance between the fish center and jelly center

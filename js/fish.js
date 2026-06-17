@@ -33,8 +33,8 @@ function takeDamage() {
 }
 
 function updateFishPhysics(dt){
-    const accel=850;    
-    const maxSpd=380; // speed limit
+    const accel=state.selectedFish==='puff'?500:850;    
+    const maxSpd=state.selectedFish==='puff'?240:380; // speed limit
     const drag=0.88;    //water friction
 
     let ax=0,ay=0;
@@ -93,9 +93,9 @@ fish.dashT=Math.max(0,fish.dashT-dt);
   fish.shrink+=((isShrinking? 1 : 0)- fish.shrink)*Math.min(1,dt*15);
 
   // screen boundary
-  const fr =fish.r*(fish.shrink>0.5? 0.65:1);
-  fish.x=clamp(fish.x,fish.r,W-fish.r);
-  fish.y=clamp(fish.y,fish.r,H-fish.r);
+  const currentRadius = fish.r * (state.selectedFish === 'puff' ? (1.0 - fish.shrink * 0.1) : 1.0);
+  fish.x=clamp(fish.x, currentRadius, W - currentRadius);
+  fish.y=clamp(fish.y, currentRadius, H - currentRadius);
 
   //animation tilt and wag
 
@@ -135,8 +135,8 @@ function drawPlayerFish() {
   ctx.strokeStyle = '#ba55d3'; ctx.lineWidth = 3; ctx.stroke(); 
 }
 
-    const tail = Math.sin(fish.phase) * 5;
-    
+if (state.selectedFish==='orange'){
+   const tail = Math.sin(fish.phase) * 5;  
     // draw Tail
     ctx.fillStyle = '#ff7b00'; 
     ctx.beginPath(); 
@@ -150,6 +150,41 @@ function drawPlayerFish() {
     ctx.beginPath(); 
     ctx.ellipse(0, 0, fish.r*1.4, fish.r, 0, 0, Math.PI*2); 
     ctx.fill();
+} else{
+  const pScale=1.2-(fish.shrink * 0.1);
+  ctx.scale(pScale, pScale);
+  //tail
+  const tail=Math.sin(fish.phase)*4;
+  ctx.fillStyle='#cf3030';
+  ctx.beginPath();
+  ctx.moveTo(-fish.r,0);
+  ctx.lineTo(-fish.r * 1.6, -fish.r * 0.5 + tail); 
+  ctx.lineTo(-fish.r * 1.6, fish.r * 0.5 + tail);
+  ctx.fill();
+
+  //body
+  ctx.fillStyle='#ffffff';
+  ctx.beginPath();
+  ctx.beginPath();
+  ctx.arc(0,0,fish.r,0,Math.PI*2);
+  ctx.fill();
+  ctx.fillStyle='#cf3030';
+  ctx.beginPath();
+  ctx.arc(0,0,fish.r,Math.PI,0);
+  ctx.fill();
+
+  //spikes
+  if (fish.shrink < 0.3) {
+    ctx.strokeStyle = '#cf3030';
+    ctx.lineWidth = 2;
+    for (let a = Math.PI; a <= Math.PI * 2; a += Math.PI / 5) {
+      ctx.beginPath();
+      ctx.moveTo(Math.cos(a) * fish.r, Math.sin(a) * fish.r);
+      ctx.lineTo(Math.cos(a) * (fish.r + 6), Math.sin(a) * (fish.r + 6));
+      ctx.stroke();
+    }
+  }
+}
     
     // ko eyes
     if (fish.hp <= 0) {
