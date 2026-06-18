@@ -35,7 +35,7 @@ let state = {
 };
 
 const entities={bgFish:[], turtles:[],segments:[],
-  jellyfish:[],pearls:[],particles:[],floatingTexts:[],powerups:[]};
+  jellyfish:[],pearls:[],particles:[],floatingTexts:[],powerups:[],eels:[],bolts:[]};
 
 const fish = {
     x: W * 0.25,

@@ -40,6 +40,14 @@ function spawnSegment(x) {
     });
   }
 
+ if (state.phase === 'darkcave' && Math.random() < 0.20 && index > 10) {
+    entities.eels.push({
+      x: x + segmentWidth / 2,
+      side: Math.random() < 0.5 ? 'top' : 'bottom',
+      timer: rand(1, 4)
+    });
+  }
+
   // Pearls spawn in all phases
   const midX = x + segmentWidth / 2;
 const playY = state.phase === 'ocean' ? rand(100, H - 100) : cY + rand(-30, 30);
@@ -72,6 +80,29 @@ function updateObstacles(dt) {
     // bob up and down using a sine wave
     j.y += Math.sin(performance.now() * 0.003 + j.phase) * 60 * dt;
     return (j.x - world.scroll > -100);
+  });
+
+  //eel
+  updateArray(entities.eels, (eel) => {
+    eel.timer -= dt;
+    if (eel.timer <= 0) {
+      eel.timer = 5.0; 
+      const seg = entities.segments.find(s => Math.abs(s.x + segmentWidth / 2 - eel.x) < 5);
+      if (seg) {
+        const shootY = eel.side === 'top' ? (seg.cY - seg.gap / 2 + 15) : (seg.cY + seg.gap / 2 - 15);
+        
+        entities.bolts.push({
+          x: eel.x,
+          y: shootY,
+          vy: eel.side === 'top' ? 300 : -300 
+        });
+      }
+    }
+    return (eel.x - world.scroll > -100);
+  });
+  updateArray(entities.bolts, (b) => {
+    b.y += b.vy * dt;
+    return (b.x - world.scroll > -200 && b.y > -50 && b.y < H + 50); 
   });
 
   //shields
@@ -136,23 +167,94 @@ entities.powerups.forEach(p => {
 }
 // collision detection 
 function checkWallCollisions() {
-
-  const r=state.selectedFish==='puff' ? fish.r*(1.0-fish.shrink*0.1):fish.r;
+  const r = state.selectedFish === 'puff' ? fish.r * (1.0 - fish.shrink * 0.1) : fish.r;
   for (let seg of entities.segments) {
-    // get the wall actual position on the screen
     const x = seg.x - world.scroll;
-    // check if the fish is inside this specific wall segment
-    if (fish.x + fish.r > x && fish.x - fish.r < x + seg.w) {
-      // calculate where the rock walls are
+    if (fish.x + r > x && fish.x - r < x + seg.w) {
       const topWall = seg.cY - seg.gap / 2;
       const bottomWall = seg.cY + seg.gap / 2;
-      // did the fish hit the top rock or the bottom rock
-      if (fish.y - fish.r < topWall || fish.y + fish.r > bottomWall) {
+      if (fish.y - r < topWall || fish.y + r > bottomWall) {
         return true; 
       }
     }
   }
   return false; 
+}
+function drawEels() {
+  entities.eels.forEach(eel => {
+    const x = eel.x - world.scroll;
+    if (x < -60 || x > W + 60) return;
+    const seg = entities.segments.find(s => Math.abs(s.x + segmentWidth / 2 - eel.x) < 5);
+    if (!seg) return;
+    const wallY = eel.side === 'top' ? (seg.cY - seg.gap / 2) : (seg.cY + seg.gap / 2);
+
+    ctx.save();
+    ctx.translate(x, wallY);
+    if (eel.side === 'top') ctx.scale(1, -1); 
+
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = '#49c7ff'; 
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 6;           
+    ctx.lineJoin = 'miter';     
+    ctx.beginPath();
+    ctx.moveTo(15, -4);   
+    ctx.lineTo(0, -14);   
+    ctx.lineTo(-15, -2);  
+    ctx.lineTo(-25, -12); 
+    ctx.lineTo(-35, -4);  
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#0b1d30'; 
+    ctx.fillRect(4, -9, 4, 4);
+
+    ctx.restore();
+  });
+}
+
+function drawBolts() {
+  entities.bolts.forEach(b => {
+    const x = b.x - world.scroll;
+    if (x < -20 || x > W + 20) return;
+    ctx.save();
+    ctx.translate(x, b.y);
+    if (b.vy < 0) {
+      ctx.scale(1, -1);
+    }
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = '#e8ff00';
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.moveTo(-6, -15); 
+    ctx.lineTo(8, -15);  
+    ctx.lineTo(2, -2);  
+    ctx.lineTo(10, -2);  
+    ctx.lineTo(-8, 18);  
+    ctx.lineTo(-2, 4);   
+    ctx.lineTo(-10, 4);  
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(-6 + rand(-5, 5), -15 + rand(-5, 5));
+    ctx.lineTo(0 + rand(-5, 5), 0 + rand(-5, 5));
+    ctx.lineTo(-8 + rand(-5, 5), 18 + rand(-5, 5));
+    ctx.stroke();
+    ctx.restore();
+  });
+}
+
+function checkBoltCollisions() {
+  const r = state.selectedFish === 'puff' ? fish.r * (1.0 - fish.shrink * 0.1) : fish.r;
+  for (let b of entities.bolts) {
+    const x = b.x - world.scroll;
+    const dist = Math.hypot(fish.x - x, fish.y - b.y);
+    if (dist < r + 8) { 
+      return true;
+    }
+  }
+  return false;
 }
 
 function drawJellyfish() {
@@ -192,7 +294,7 @@ function checkJellyCollisions() {
     const dist = Math.hypot(fish.x - x, fish.y - j.y);
     
     // if the distance is less than their combined radius they crashed
-    if (dist < fish.r + j.r) {
+    if (dist < r + j.r) {
       return true; 
     }
   }

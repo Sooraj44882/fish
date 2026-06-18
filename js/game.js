@@ -72,6 +72,9 @@ function resetAndPlay(){
   entities.segments=[];
   entities.jellyfish=[];
   entities.pearls=[];
+  entities.powerups=[];
+  entities.eels=[];
+  entities.bolts=[];
   state.segmentCount=0;
   state.score=0;
   state.distance=0;
@@ -154,8 +157,9 @@ updateArray(entities.floatingTexts, (ft) => {
    //  crash logic for both  cave Walls and Jellyfish 
   const hitWall = typeof checkWallCollisions === 'function' && checkWallCollisions();
   const hitJelly = typeof checkJellyCollisions === 'function' && checkJellyCollisions();
+  const hitBolt = typeof checkBoltCollisions === 'function' && checkBoltCollisions();
 
-  if (hitWall || hitJelly) {
+  if (hitWall || hitJelly || hitBolt) {
     if (typeof takeDamage === 'function') takeDamage();
   }
 }
@@ -166,6 +170,8 @@ function draw() {
   if(typeof drawPearls==='function') drawPearls();
   if (typeof drawJellyfish === 'function') drawJellyfish();
 
+  if (typeof drawEels === 'function') drawEels();   
+  if (typeof drawBolts === 'function') drawBolts();
   drawPlayerFish();  // draw fish
 
 // Only particles and text shake
