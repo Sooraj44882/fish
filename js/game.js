@@ -227,3 +227,89 @@ resize();
 if (typeof initBackground === 'function') initBackground();
 draw();
 window.addEventListener('resize', resize);
+
+function drawPreviews() {
+  // orange fish preview
+  const c1 = document.getElementById('previewOrange');
+  const x1 = c1.getContext('2d');
+  const cx = c1.width / 2, cy = c1.height / 2;
+  x1.clearRect(0, 0, c1.width, c1.height);
+
+  // tail
+  x1.fillStyle = '#ff7b00';
+  x1.beginPath();
+  x1.moveTo(cx - 18, cy);
+  x1.lineTo(cx - 36, cy - 14);
+  x1.lineTo(cx - 36, cy + 14);
+  x1.fill();
+
+  // body
+  x1.fillStyle = '#ff9e22';
+  x1.beginPath();
+  x1.ellipse(cx, cy, 25, 18, 0, 0, Math.PI * 2);
+  x1.fill();
+
+  // eye white
+  x1.fillStyle = '#fff';
+  x1.beginPath();
+  x1.arc(cx + 11, cy - 5, 6, 0, Math.PI * 2);
+  x1.fill();
+
+  // pupil
+  x1.fillStyle = '#000';
+  x1.beginPath();
+  x1.arc(cx + 13, cy - 5, 3, 0, Math.PI * 2);
+  x1.fill();
+
+  // puff fish preview
+  const c2 = document.getElementById('previewPuff');
+  const x2 = c2.getContext('2d');
+  const cx2 = c2.width / 2, cy2 = c2.height / 2;
+  x2.clearRect(0, 0, c2.width, c2.height);
+
+  // tail
+  x2.fillStyle = '#cf3030';
+  x2.beginPath();
+  x2.moveTo(cx2 - 18, cy2);
+  x2.lineTo(cx2 - 30, cy2 - 9);
+  x2.lineTo(cx2 - 30, cy2 + 9);
+  x2.fill();
+
+  // body bottom white half
+  x2.fillStyle = '#ffffff';
+  x2.beginPath();
+  x2.arc(cx2, cy2, 22, 0, Math.PI * 2);
+  x2.fill();
+
+  // body top red half
+  x2.fillStyle = '#cf3030';
+  x2.beginPath();
+  x2.arc(cx2, cy2, 22, Math.PI, 0);
+  x2.fill();
+
+  // spikes
+  x2.strokeStyle = '#cf3030';
+  x2.lineWidth = 2;
+  for (let a = Math.PI; a <= Math.PI * 2; a += Math.PI / 5) {
+    x2.beginPath();
+    x2.moveTo(cx2 + Math.cos(a) * 22, cy2 + Math.sin(a) * 22);
+    x2.lineTo(cx2 + Math.cos(a) * 30, cy2 + Math.sin(a) * 30);
+    x2.stroke();
+  }
+
+  // eye white
+  x2.fillStyle = '#fff';
+  x2.beginPath();
+  x2.arc(cx2 + 10, cy2 - 5, 6, 0, Math.PI * 2);
+  x2.fill();
+
+  // pupil
+  x2.fillStyle = '#000';
+  x2.beginPath();
+  x2.arc(cx2 + 12, cy2 - 5, 3, 0, Math.PI * 2);
+  x2.fill();
+}
+resize();
+if (typeof initBackground === 'function') initBackground();
+drawPreviews();  
+draw();

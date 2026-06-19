@@ -27,11 +27,15 @@ function initBackground(){
 function updateBackgroundLogic(dt){
     updateArray(entities.bgFish,(f)=>{
         f.x += (f.vx * f.dir * dt) - (world.speed * 0.2 * dt);
-        // slight up and down
         f.y+=Math.sin(performance.now()*0.002+f.p)*0.5;
 
         if (f.x < -200) f.x = W + 200;
         if (f.x > W + 200) f.x = -200;
+
+        // slowly remove fish as we go deeper
+        if(state.phase === 'cave' && entities.bgFish.length > 20 && Math.random() < 0.001) return false;
+        if(state.phase === 'darkcave' && entities.bgFish.length > 5 && Math.random() < 0.005) return false;
+
     return true;
     });
 }

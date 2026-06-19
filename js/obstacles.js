@@ -5,7 +5,7 @@ function spawnSegment(x) {
 
   // ---- PHASE TRANSITIONS ----
   if (index === 105) { state.phase = 'cave'; UI.stage.textContent="Cave";}
-  if (index === 210) { state.phase = 'darkcave'; UI.stage.textContent = "Deep Cave"; }
+  if (index === 200) { state.phase = 'darkcave'; UI.stage.textContent = "Deep Cave"; }
 
   const wave = Math.sin((x + world.scroll) * 0.007) * 40;
   let cY, gap;
@@ -14,18 +14,12 @@ function spawnSegment(x) {
     gap = 2500;                         // so wide the walls are invisible
     cY  = H - 1250 - rand(10, 30);
 
-  } else if (state.phase === 'transition') {
-    const progress  = (index - 105) / 30;          // 0 → 1 over 30 segments
-    const targetGap = Math.max(160, 260 - world.difficulty * 2);
-    const targetCY  = H * 0.5 + wave;
-    gap = 2500       * (1 - progress) + targetGap * progress;
-    cY  = (H - 1250) * (1 - progress) + targetCY  * progress;
-
   } else {  // cave
-    const last  = entities.segments[entities.segments.length - 1];
-    const lastY = last ? last.cY : H * 0.5;
+    const last = entities.segments[entities.segments.length - 1];
+    const wasOcean = last && last.gap > 1000;  // detects ocean→cave switch
+    const lastY = wasOcean ? H * 0.65 : (last ? last.cY : H * 0.5);
     gap = Math.max(160, 260 - world.difficulty * 2 + Math.sin(x * 0.01) * 20);
-    cY  = Math.min(Math.max(lastY + wave * 0.1 + rand(-20, 20), 100), H - 100);
+    cY = Math.min(Math.max(lastY + wave * 0.1 + rand(-20, 20), 100), H - 100);
   }
   entities.segments.push({ x, w: segmentWidth, cY, gap });
   
@@ -132,7 +126,7 @@ function updateObstacles(dt) {
 
 function drawObstacles() {
   ctx.save();
-  ctx.fillStyle = '#0b1d30'; // Dark cave rock color
+  ctx.fillStyle = state.phase === 'ocean' ? '#1c5e8c' : state.phase === 'cave' ? '#0b1d30' : '#060d18'; // Dark cave rock color
 
   entities.segments.forEach(seg => {
     const x = seg.x - world.scroll; 
