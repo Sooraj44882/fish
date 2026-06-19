@@ -25,7 +25,7 @@ function spawnSegment(x) {
   
   
   // Jellyfish only appear in cave
-  if (state.phase === 'cave' && Math.random() < 0.15 && index > 5) {
+  if (state.phase === 'cave' && state.phase !== 'darkcave' && Math.random() < 0.15 && index > 5) {
     entities.jellyfish.push({
       x: x + segmentWidth / 2,
       y: cY + rand(-40, 40),
@@ -71,10 +71,11 @@ function updateObstacles(dt) {
 
   // update Jellyfish logic
   updateArray(entities.jellyfish, (j) => {
-    // bob up and down using a sine wave
     j.y += Math.sin(performance.now() * 0.003 + j.phase) * 60 * dt;
+    // remove jellyfish once we reach dark cave
+    if(state.phase === 'darkcave') return false;
     return (j.x - world.scroll > -100);
-  });
+});
 
   //eel
   updateArray(entities.eels, (eel) => {
