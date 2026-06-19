@@ -88,7 +88,7 @@ fish.dashT=Math.max(0,fish.dashT-dt);
   fish.y +=fish.vy*dt;
 
   //shrink 
-  const isShrinking=keys.has('ControlLeft') || keys.has('KeyX') && state.selectedFish==='puff';
+  const isShrinking=(keys.has('ControlLeft') || keys.has('KeyX')) && state.selectedFish==='puff';
 
   fish.shrink+=((isShrinking? 1 : 0)- fish.shrink)*Math.min(1,dt*15);
 
