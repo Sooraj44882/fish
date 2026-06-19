@@ -327,6 +327,8 @@ function checkPearlCollisions(dt){
   updateArray(entities.pearls,(p)=>{
     const x=p.x-world.scroll;
 
+    if(x<-100)return false;
+
     const dist=Math.hypot(fish.x-x,fish.y-p.y);  // distance between fish and pearl
 
     if (fish.buffs.magnet > 0 && dist < 250) {
