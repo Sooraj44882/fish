@@ -1,84 +1,73 @@
 # DeepCaves
-
-Imagine being a tiny fish stuck in the deep caves. You basically have to guide it through a bunch of dangerous tunnels, dodging obstacles and just trying to survive for as long as you possibly can.
-
 ![alt text](<Screenshot 2026-06-19 132525.png>)
 
+In game you are a tiny fish and you have to  survive in these underwater cave tunnels for as long as you can. 
 
-## Play it
+inspired by hollow knight ,
+i am fish, working on a bigger open world exploration version of this, in which you can explorle world with proper puzzles and story mode for each fish.
+coming soon
+stay tuned :D  
 
-[Play on itch.io](https://sooraj4.itch.io/deepcaves)
+
+play here : https://sooraj4.itch.io/deepcaves
 
 
-## Controls
 
-| Action | Keys |
-|---|---|
-| Move | WASD / Arrow keys |
-| Dash | Shift / Space (orange only )|
-| Shrink | Ctrl / X (puff only) |
+
+
+
+## controls
+
+
+- move : wasd / arrow keys
+- dash : shift or space (orange only)
+- shrink : ctrl or x (puff only)
 
 
 
 ## Characters
 
-Pick one 
 
-**Orange fish** : faster, has a  dash . Press shift/space. Good for reacting quickly and blasting through gaps at speed.
+Orange :faster and has a dash, press shift or space.good for going fast through gaps in timing, in future when preadtor fish chase  you .
 
 ![orange](image.png)
 
-**Puff fish** : slower movement, no dash. Hold Ctrl or X and the hitbox shrinks way down so you can squeeze through really tight sections.
+Puff  : slower, no dash but hold ctrl or x. Good for going through small gaps.
 
 ![puff](image-1.png)
 
 
-
 ## Powerups
 
-Two types spawn as glowing orbs in the cave:
+shield (blue orb) - takes one hit for you. you can see the aura around the fish when its active
 
-**Shield** (blue orb) : absorbs one hit. The aura around the fish shows it's active. Breaks before your HP goes down.
+ <img width="282" height="205" alt="image" src="https://github.com/user-attachments/assets/831e7c72-99ea-44f4-b137-b1545ee1b9b0" />
 
 
-**Magnet** (purple orb) : pulls nearby pearls toward you for 10 seconds. Good for building combos without chasing everything.
+magnet (purple orb) - sucks nearby pearls toward you for 10 seconds, really good for combos
+
 
 
 ## Scoring
 
-Collect white pearls to score. Pick them up in quick succession and you build a combo multiplier up to x5. Wait too long between pearls and it resets. Taking damage also resets it immediately.
-
----
-
-## Stages
+collect white pearls, pick them up fast enough and you get a combo multiplier up to x5. wait too long or take damage and it resets
 
 
-Open Sea : Wide open, no walls, relaxed 
+
+## Stages/Biomes
+
+
+Open Sea 
 
 ![open sea](<Screenshot 2026-06-19 134507.png>)
 
-Cave : Walls appear, jellyfish start showing up
+Cave : Caves appear and beware of jelly fish. 
 
 ![cave](<Screenshot 2026-06-19 134529.png>)
 
-Deep Cave:Darker, eels on the walls shooting bolts
+Deep Cave:Darker caves , eels on the walls shooting bolts
 
 ![daark cave](image-2.png)
-
-
-## Files
-
-```
-index.html      
-style.css       
-js/
-  utils.js     
-  control.js    
-  fish.js       
-  backgound.js  
-  obstacles.js  
-  game.js       
-```
 
 
 
@@ -88,5 +77,6 @@ Just HTML, CSS and JS. Canvas API for all the drawing.
 
 
 
-
 Made with love .Probably not perfect but I'm pretty happy with how it turned out.
+
+love to know what you thought of my game :D
